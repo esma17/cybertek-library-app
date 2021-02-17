@@ -22,11 +22,12 @@ public class LoginPage {
 
     @FindBy(xpath = "//section[@id='dashboard']/div")
     public WebElement dashBoardForLibrarian;
-
+    @FindBy(xpath = "//a[@class='nav-link dropdown-toggle']/span")
+    public WebElement avatarName;
 
 
     public boolean loginStudent() {
-        StudentHomePage student=new StudentHomePage();
+        StudentHomePage student = new StudentHomePage();
         boolean canLogin = false;
         Driver.getDriver().get(ConfigurationReader.getProperty("url"));
         boxEmailAdress.sendKeys(ConfigurationReader.getProperty("studentUser"));

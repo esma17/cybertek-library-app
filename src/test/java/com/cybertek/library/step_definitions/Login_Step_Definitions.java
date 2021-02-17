@@ -3,18 +3,18 @@ package com.cybertek.library.step_definitions;
 import com.cybertek.library.pages.LibrarianHomePage;
 import com.cybertek.library.pages.LoginPage;
 import com.cybertek.library.pages.StudentHomePage;
+import com.cybertek.library.utilities.BrowserUtils;
 import com.cybertek.library.utilities.ConfigurationReader;
 import com.cybertek.library.utilities.Driver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
 
 public class Login_Step_Definitions {
     LoginPage login = new LoginPage();
-    LibrarianHomePage librarianHomePage=new LibrarianHomePage();
-    StudentHomePage student=new StudentHomePage();
+    LibrarianHomePage librarianHomePage = new LibrarianHomePage();
+    StudentHomePage student = new StudentHomePage();
 
     @Given("I am on the login page")
     public void i_am_on_the_login_page() {
@@ -30,7 +30,7 @@ public class Login_Step_Definitions {
 
     @Then("dashboard should be displayed")
     public void dashboard_should_be_displayed() {
-       Assert.assertTrue(login.dashBoardForLibrarian.isDisplayed());
+        Assert.assertTrue(login.dashBoardForLibrarian.isDisplayed());
     }
 
 
@@ -44,7 +44,7 @@ public class Login_Step_Definitions {
 
     @Then("books page should be displayed")
     public void books_page_should_be_displayed() {
-Assert.assertTrue(student.booksForStudent.isDisplayed());
+        Assert.assertTrue(student.booksForStudent.isDisplayed());
     }
 
     // **************************************************
@@ -52,10 +52,12 @@ Assert.assertTrue(student.booksForStudent.isDisplayed());
     public void i_enter_username(String string) {
         login.boxEmailAdress.sendKeys(string);
     }
+
     @When("I enter password {string}")
     public void i_enter_password(String string) {
         login.boxPassword.sendKeys(string);
     }
+
     @When("I click to the sign in button")
     public void i_click_to_the_sign_in_button() {
         login.buttonSignIn.click();
@@ -63,16 +65,23 @@ Assert.assertTrue(student.booksForStudent.isDisplayed());
 
     @Then("there should be {string} users")
     public void there_should_be_users(String string) {
-        String actualResult= librarianHomePage.userCount.getText();
-        Assert.assertEquals(actualResult,string);
+        String actualResult = librarianHomePage.userCount.getText();
+        Assert.assertEquals(actualResult, string);
     }
 
 
-    @When("I enter username {string} and {string}")
-    public void iEnterUsernameAnd(String arg0, String arg1) {
+    @When("I login using {string} and {string}")
+    public void iLoginUsingAnd(String arg0, String arg1) {
         login.boxEmailAdress.sendKeys(arg0);
         login.boxPassword.sendKeys(arg1);
         login.buttonSignIn.click();
     }
 
+    @Then("account holder name should be {string}")
+    public void accountHolderNameShouldBe(String expectedAccountName) {
+        BrowserUtils.waitForVisibility(login.avatarName,15);
+        String actualAccountName=login.avatarName.getText();
+        String expected=expectedAccountName;
+        Assert.assertEquals("The username is not as expected",expected,actualAccountName);
+    }
 }

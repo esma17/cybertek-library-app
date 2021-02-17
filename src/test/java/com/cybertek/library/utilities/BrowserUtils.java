@@ -29,5 +29,9 @@ public class BrowserUtils {
                 ExpectedConditions.elementToBeClickable(element)));
         element.click();
     }
+    public static void waitForVisibility(WebElement element,int timeout){
+        final WebDriverWait wait=new WebDriverWait(Driver.getDriver(),timeout);
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
 
 }
